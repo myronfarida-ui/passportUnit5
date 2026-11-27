@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>My Little Travel Adventure</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#dff7ff;--bg2:#fff4f8;--card:#fff;--tx:#334155;--mut:#64748b;--pri:#4f7cff;--pink:#ff8fab;--pinkd:#df6688;--line:#dbeafe;--soft:#f1f5f9;--ok:#dcfce7;--okb:#4ade80;--bad:#fee2e2;--badb:#f87171;--gold:#e6c56a;--pp:#fffdf5;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg1:#0f1b2d;--bg2:#2a1630;--card:#1e293b;--tx:#e2e8f0;--mut:#94a3b8;--line:#334155;--soft:#0f172a;--ok:#14532d;--bad:#7f1d1d;--pp:#2b2616}}
+:root[data-theme="dark"]{--bg1:#0f1b2d;--bg2:#2a1630;--card:#1e293b;--tx:#e2e8f0;--mut:#94a3b8;--line:#334155;--soft:#0f172a;--ok:#14532d;--bad:#7f1d1d;--pp:#2b2616}
+*,*::before,*::after{box-sizing:inherit;-webkit-tap-highlight-color:transparent}
+html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%}
+html,body{margin:0}
+body{font-family:"Fredoka","Noto Sans Thai",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:linear-gradient(135deg,var(--bg1),var(--bg2)) fixed;color:var(--tx);min-height:100vh;min-height:100dvh;touch-action:manipulation;overflow-x:hidden}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+.hd{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:12px max(16px,env(safe-area-inset-left)) 12px max(16px,env(safe-area-inset-right));background:var(--card);box-shadow:0 3px 12px rgba(0,0,0,.08);position:sticky;top:0;z-index:20}
+.logo{font-weight:700;color:var(--pri);font-size:clamp(16px,4vw,24px)}
+.xp{background:#fff3b0;color:#8a6400;padding:8px 16px;border-radius:30px;font-weight:700}
+.scr{display:none;flex-direction:column;align-items:center;padding:24px 14px 40px;min-height:calc(100dvh - 60px);max-width:980px;margin:0 auto;width:100%}
+.scr.on{display:flex}
+.center{justify-content:center;text-align:center}
+.box{width:100%;max-width:640px;background:var(--card);border-radius:28px;padding:clamp(18px,4vw,34px);box-shadow:0 10px 30px rgba(0,0,0,.1)}
+h1{font-size:clamp(30px,8vw,52px);color:var(--pri);margin:8px 0}
+h2{color:var(--pri);text-align:center;margin:0 0 18px;font-size:clamp(22px,5vw,30px)}
+.hero{font-size:clamp(60px,18vw,90px);animation:fl 2.5s infinite ease-in-out}
+@keyframes fl{50%{transform:translateY(-12px)}}
+.btn{min-height:50px;padding:14px 32px;border-radius:50px;background:var(--pink);color:#fff;font-size:clamp(16px,4vw,20px);font-weight:700;box-shadow:0 5px 0 var(--pinkd);transition:.15s}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 var(--pinkd)}
+.btn.blue{background:var(--pri);box-shadow:0 5px 0 #3158c9}
+.btn.ghost{background:var(--soft);color:var(--tx);box-shadow:none;border:3px solid var(--line);min-height:46px;padding:10px 18px;font-size:16px}
+.btn:disabled{background:#94a3b8;box-shadow:none;cursor:not-allowed;opacity:.6}
+.fg{margin-bottom:18px}
+.fg label,.lab{display:block;font-weight:600;font-size:18px;margin-bottom:8px}
+input[type=text],select{width:100%;min-height:50px;padding:12px 16px;border:3px solid var(--line);border-radius:16px;background:var(--soft);font-size:18px;outline:0}
+input:focus,select:focus{border-color:#7dd3fc}
+.logos{display:grid;grid-template-columns:repeat(auto-fit,minmax(54px,1fr));gap:8px}
+.lg{min-height:54px;border-radius:16px;background:var(--soft);border:3px solid transparent;font-size:30px;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:0}
+.lg.sel{border-color:var(--pink);background:rgba(255,143,171,.18)}
+.lg img{width:100%;height:100%;object-fit:cover}
+.photo{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.ph{width:96px;height:120px;border-radius:14px;background:var(--soft);border:3px dashed var(--line);display:flex;align-items:center;justify-content:center;font-size:40px;overflow:hidden;flex:none}
+.ph img{width:100%;height:100%;object-fit:cover}
+.hint{font-size:14px;color:var(--mut);margin:6px 0 0}
+.chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:10px}
+.chip{background:var(--soft);border:3px solid transparent;border-radius:18px;padding:12px 6px;font-weight:600;font-size:16px;min-height:76px;display:flex;flex-direction:column;align-items:center;gap:4px;justify-content:center;color:var(--tx)}
+.chip b{font-size:30px;font-weight:400}
+.chip.sel{border-color:var(--pink);background:rgba(255,143,171,.18)}
+.sec{margin:0 0 16px}
+.hud{width:100%;max-width:700px;display:flex;justify-content:space-between;align-items:center;font-weight:700;margin-bottom:8px;font-size:18px}
+.bar{width:100%;max-width:700px;height:12px;background:var(--line);border-radius:20px;overflow:hidden;margin-bottom:14px}
+.bar i{display:block;height:100%;width:100%;background:#7dd3fc;border-radius:20px;transition:width .1s linear,background .3s}
+.bar i.low{background:#f87171}
+.tag{display:inline-block;background:#e0f2fe;color:#0369a1;padding:6px 14px;border-radius:20px;font-weight:700;margin-bottom:12px}
+.q{font-size:clamp(20px,5vw,28px);font-weight:700;margin:6px 0 16px;text-align:center}
+.opts{display:grid;gap:12px;margin-top:14px}
+.opt{width:100%;background:var(--soft);border:3px solid var(--line);padding:14px;border-radius:18px;font-size:clamp(16px,4vw,19px);min-height:54px}
+.opt.ok{background:var(--ok);border-color:var(--okb)}
+.opt.no{background:var(--bad);border-color:var(--badb)}
+.line{min-height:62px;border:3px dashed var(--line);border-radius:16px;padding:8px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;margin-bottom:14px}
+.bank{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:14px}
+.tok{background:var(--pri);color:#fff;border-radius:14px;padding:10px 16px;font-size:19px;font-weight:600;min-height:46px}
+.big{font-size:60px;text-align:center}
+.fb{min-height:28px;text-align:center;font-weight:700;margin-top:12px;font-size:18px}
+.sent{font-size:clamp(18px,4.5vw,24px);margin:14px 0;text-align:center}
+.hl{color:var(--pri);font-weight:700}
+.stamps{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:10px 0}
+.stamp{width:46px;height:46px;border-radius:50%;border:3px solid #16a34a;color:#16a34a;display:flex;align-items:center;justify-content:center;font-size:22px;transform:rotate(-10deg)}
+.stamp.off{border-color:var(--line);color:var(--line);filter:grayscale(1);opacity:.5}
+.pp{width:100%;max-width:640px;background:var(--pp);border:8px solid var(--gold);border-radius:24px;padding:clamp(16px,4vw,28px);text-align:center;box-shadow:0 15px 40px rgba(0,0,0,.2)}
+.pp h2{color:#a16207}
+.pprow{display:flex;gap:16px;align-items:center;text-align:left;flex-wrap:wrap;justify-content:center}
+.pph{width:110px;height:140px;border-radius:12px;border:4px solid var(--gold);background:var(--soft);display:flex;align-items:center;justify-content:center;font-size:50px;overflow:hidden}
+.pph img,.ppl img{width:100%;height:100%;object-fit:cover}
+.ppl{width:64px;height:64px;border-radius:50%;overflow:hidden;font-size:50px;display:flex;align-items:center;justify-content:center;margin:0 auto 6px}
+.ppn{font-size:24px;color:var(--pri);font-weight:700;word-break:break-word}
+.badge{display:inline-block;padding:8px 18px;border-radius:30px;background:#dcfce7;color:#166534;font-weight:700;margin:8px 0}
+.cf{position:fixed;top:-10px;animation:fall 3s linear forwards;z-index:100;pointer-events:none}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+.msg{color:#dc2626;font-weight:600;text-align:center;min-height:22px;margin:0 0 8px}
+@media (max-width:480px){.chips{grid-template-columns:repeat(3,1fr)}.opt{padding:12px}}
+@media (min-width:900px){.opts.two{grid-template-columns:1fr 1fr}}
+@media (prefers-reduced-motion:reduce){.hero{animation:none}}
+[hidden]{display:none!important}
+.map{position:relative;height:clamp(270px,54vw,430px);border-radius:22px;overflow:hidden;background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.45),transparent 60%),#bdefff;margin-bottom:8px}
+.land{position:absolute;background:#9bd99a;opacity:.9;border-radius:45% 55% 40% 60%}
+.pin{position:absolute;transform:translate(-50%,-50%);width:clamp(38px,9vw,56px);height:clamp(38px,9vw,56px);border-radius:50%;background:var(--card);border:4px solid var(--pink);font-size:clamp(18px,4.5vw,26px);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(0,0,0,.2);padding:0;transition:.15s}
+.pin span{position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:2px;background:var(--card);color:var(--tx);padding:2px 8px;border-radius:10px;font-size:clamp(11px,2.8vw,14px);font-weight:600;white-space:nowrap}
+.pin.sel{background:#fde68a;border-color:#f59e0b;transform:translate(-50%,-50%) scale(1.2);z-index:3}
+.pin.dim{opacity:.35}.pin:disabled{cursor:default}
+.scene{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+.sc{background:var(--soft);border-radius:20px;padding:14px 6px}
+.sc b{display:block;font-size:clamp(40px,11vw,64px);font-weight:400}
+.sc span{font-weight:700;font-size:clamp(13px,3.5vw,17px)}
+.modes{display:grid;gap:14px;grid-template-columns:1fr 1fr}
+.mode{background:var(--soft);border:3px solid var(--line);border-radius:22px;padding:20px 10px;font-weight:700;font-size:18px;display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--tx)}
+.mode b{font-size:48px;font-weight:400}
+@media (max-width:420px){.modes{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="hd"><div class="logo">🌎 My Travel Adventure</div><div class="xp">⭐ <span id="xp">0</span> XP</div></header>
+
+<section id="welcome" class="scr on center">
+  <div class="hero">🧳🌎</div>
+  <h1>My Little Travel Adventure</h1>
+  <p style="font-size:20px;color:var(--mut)">Pass Game 1 (Story Time) and Game 2 (My Trip) to earn your passport!</p>
+  <button class="btn" id="goProfile">✈️ START MY JOURNEY</button>
+</section>
+
+<section id="profile" class="scr">
+  <div class="box">
+    <h2>🛂 Create Your Traveler Profile</h2>
+    <div class="fg"><label for="name">👤 What’s your name?</label><input id="name" type="text" maxlength="20" placeholder="Enter your name..." autocomplete="off"></div>
+    <div class="fg"><label for="nat">🌎 What’s your nationality?</label>
+      <select id="nat"><option value="">Choose your nationality</option><option>Thai 🇹🇭</option><option>Japanese 🇯🇵</option><option>Korean 🇰🇷</option><option>Chinese 🇨🇳</option><option>British 🇬🇧</option><option>French 🇫🇷</option><option>American 🇺🇸</option><option>Australian 🇦🇺</option></select></div>
+    <div class="fg"><span class="lab">🎨 Choose your passport logo</span><div class="logos" id="logos"></div>
+      <p class="hint">Tap an emoji, or upload your own logo image.</p>
+      <input type="file" id="logoFile" accept="image/*" hidden>
+      <button class="btn ghost" id="logoBtn" style="margin-top:8px">📁 Upload my logo</button></div>
+    <div class="fg"><span class="lab">📷 Your passport photo</span>
+      <div class="photo"><div class="ph" id="phPrev">👤</div>
+        <div><input type="file" id="photoFile" accept="image/*" hidden>
+          <button class="btn ghost" id="photoBtn">📁 Choose photo from file</button>
+          <p class="hint">Works with your gallery, camera or computer files.</p></div></div></div>
+    <div class="msg" id="pmsg"></div>
+    <button class="btn" id="mkProfile" style="width:100%">NEXT: PLAN MY TRIP →</button>
+  </div>
+</section>
+
+<section id="trip" class="scr">
+  <div class="box" style="max-width:820px">
+    <div id="pick"><div class="tag">🎮 GAME 2 · MY TRIP</div><h2>🗺️ Plan Your Trip</h2>
+    <div class="sec"><span class="lab">📍 Where did you go last week? Tap the map!</span><div class="map" id="cities"></div></div>
+    <div class="sec"><span class="lab">🎯 What did you do there?</span><div class="chips" id="acts"></div></div>
+    <div class="sec"><span class="lab">🚆 How did you get there?</span><div class="chips" id="trans"></div></div>
+    <button class="btn blue" id="goQuiz" style="width:100%" disabled>START THE CHALLENGES 🧠</button></div>
+  </div>
+</section>
+
+<section id="story" class="scr">
+  <div class="box" style="max-width:820px;text-align:center">
+    <div class="tag">🎮 GAME 1 · STORY TIME</div>
+    <h2 id="stTitle"></h2>
+    <div class="map" id="stMap"></div>
+    <div class="scene" id="stScene"></div>
+    <div class="sent" id="stText"></div>
+    <p class="hint" id="stCount"></p>
+    <button class="btn blue" id="stGo" disabled>I’m ready! 🧠</button>
+  </div>
+</section>
+
+<section id="quiz" class="scr">
+  <div class="hud"><span id="lives"></span><span id="streak"></span><span id="qn"></span></div>
+  <div class="bar"><i id="tbar"></i></div>
+  <div class="box" style="max-width:700px">
+    <div class="tag" id="qtag"></div>
+    <div id="qbody"></div>
+    <div class="fb" id="fb"></div>
+  </div>
+</section>
+
+<section id="result" class="scr center">
+  <div class="box">
+    <div class="big" id="rEmoji">🎉</div>
+    <h2 id="rTitle"></h2>
+    <div class="sent">📍 <span class="sbj">I</span> went to <span class="hl" id="rCity"></span> last week.</div>
+    <div class="sent">🎯 <span class="sbj">I</span> <span class="hl" id="rAct"></span> there.</div>
+    <div class="sent">🚆 <span class="sbj">I</span> went there by <span class="hl" id="rTr"></span>.</div>
+    <button class="btn ghost" id="speakBtn">🔊 Listen &amp; Speak</button>
+    <div style="margin-top:16px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <button class="btn blue" id="goPass">🛂 GET MY PASSPORT</button>
+      <button class="btn ghost" id="retry">🔁 Try again</button></div>
+  </div>
+</section>
+
+<section id="passport" class="scr">
+  <div class="pp">
+    <div class="ppl" id="ppLogo"></div>
+    <h2>MY TRAVEL PASSPORT</h2>
+    <div class="pprow">
+      <div class="pph" id="ppPhoto"></div>
+      <div><div class="ppn" id="ppName"></div>
+        <div>🌎 <strong id="ppNat"></strong></div>
+        <div>📍 <strong id="ppCity"></strong></div>
+        <div>🎯 <strong id="ppAct"></strong></div>
+        <div>🚆 By <strong id="ppTr"></strong></div></div>
+    </div>
+    <div class="stamps" id="stamps"></div>
+    <div style="font-size:34px" id="stars"></div>
+    <div class="badge" id="rank"></div>
+    <h3 style="margin:6px 0">Final Score: <span id="fscore"></span> XP</h3>
+    <p class="hint" id="best"></p>
+    <button class="btn" id="again">🔁 TRAVEL AGAIN</button>
+  </div>
+</section>
+
+<script>
+const $=id=>document.getElementById(id);
+const CITIES=[["Bangkok","🇹🇭","🛕"],["Tokyo","🇯🇵","🗻"],["Seoul","🇰🇷","🏙️"],["Beijing","🇨🇳","🐼"],["Paris","🇫🇷","🗼"],["London","🇬🇧","🎡"],["New York","🇺🇸","🗽"],["Sydney","🇦🇺","🦘"]];
+const POS=[[68,66],[86,44],[74,27],[62,39],[46,31],[40,18],[20,34],[84,82]];
+const LAND=[[6,14,28,36,-12],[20,52,12,36,15],[38,20,18,46,10],[56,12,36,40,8],[76,68,16,18,20]];
+const KIDS=[["Tom","👦","He"],["Mia","👧","She"],["Ben","🧒","He"],["Anna","👧","She"],["Leo","👦","He"],["Lily","👧","She"],["Max","👦","He"],["Zoe","👧","She"]];
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const ACTS=[["visited a temple","🏯"],["ate delicious food","🍜"],["went shopping","🛍️"],["took photos","📸"],["visited a museum","🏛️"],["swam in the sea","🏊"]];
+const TRANS=[["bus","🚌"],["coach","🚍"],["subway","🚇"],["plane","✈️"],["train","🚆"],["taxi","🚕"]];
+const LOGOS=["🌎","✈️","🧳","🗺️","⭐","🚀","🐘","🌴"];
+const QTIME=20;
+let G,timer,tleft,locked,sT;
+
+function fresh(){G={subj:{sub:"I",who:"you"},name:"",nat:"",logo:"🌎",logoImg:"",photo:"",city:null,act:null,tr:null,xp:0,lives:3,streak:0,qi:0,ok:0,qs:[]}}
+fresh();
+const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);
+function show(id){document.querySelectorAll(".scr").forEach(s=>s.classList.remove("on"));$(id).classList.add("on");window.scrollTo(0,0)}
+function setXP(){$("xp").textContent=G.xp}
+
+/* image from file, cropped square/portrait, resized for any device */
+function readImg(file,w,h,cb){
+  if(!file||!file.type.startsWith("image/")){$("pmsg").textContent="Please choose an image file 🙂";return}
+  const fr=new FileReader();
+  fr.onerror=()=>{$("pmsg").textContent="Could not read that file."};
+  fr.onload=()=>{const im=new Image();
+    im.onerror=()=>{$("pmsg").textContent="That image format isn’t supported here. Try JPG or PNG."};
+    im.onload=()=>{const c=document.createElement("canvas");c.width=w;c.height=h;const x=c.getContext("2d");
+      const r=Math.max(w/im.width,h/im.height),sw=w/r,sh=h/r;
+      x.drawImage(im,(im.width-sw)/2,(im.height-sh)/2,sw,sh,0,0,w,h);
+      cb(c.toDataURL("image/jpeg",.85));$("pmsg").textContent=""};
+    im.src=fr.result};
+  fr.readAsDataURL(file);
+}
+
+/* profile */
+function drawLogos(){
+  const box=$("logos");box.innerHTML="";
+  LOGOS.forEach(l=>{const b=document.createElement("button");b.className="lg"+(!G.logoImg&&G.logo===l?" sel":"");b.textContent=l;b.type="button";
+    b.onclick=()=>{G.logo=l;G.logoImg="";drawLogos()};box.appendChild(b)});
+  if(G.logoImg){const b=document.createElement("button");b.className="lg sel";b.type="button";const i=document.createElement("img");i.src=G.logoImg;i.alt="My logo";b.appendChild(i);box.appendChild(b)}
+}
+drawLogos();
+$("goProfile").onclick=()=>show("profile");
+$("logoBtn").onclick=()=>$("logoFile").click();
+$("photoBtn").onclick=()=>$("photoFile").click();
+$("logoFile").onchange=e=>{readImg(e.target.files[0],160,160,d=>{G.logoImg=d;drawLogos()});e.target.value=""};
+$("photoFile").onchange=e=>{readImg(e.target.files[0],300,375,d=>{G.photo=d;$("phPrev").innerHTML="";const i=document.createElement("img");i.src=d;i.alt="My photo";$("phPrev").appendChild(i)});e.target.value=""};
+$("mkProfile").onclick=()=>{
+  const n=$("name").value.trim(),na=$("nat").value;
+  if(!n||!na){$("pmsg").textContent="Please enter your name and choose your nationality 😊";return}
+  G.name=n;G.nat=na;$("pmsg").textContent="";startStory();
+};
+
+/* trip */
+function chips(id,data,key){
+  const box=$(id);box.innerHTML="";
+  data.forEach(d=>{const b=document.createElement("button");b.type="button";b.className="chip";
+    const e=document.createElement("b");e.textContent=d[1];const t=document.createElement("span");t.textContent=d[0];
+    b.append(e,t);
+    b.onclick=()=>{G[key]=d;[...box.children].forEach(c=>c.classList.remove("sel"));b.classList.add("sel");$("goQuiz").disabled=!(G.city&&G.act&&G.tr)};
+    box.appendChild(b)});
+}
+chips("acts",ACTS,"act");chips("trans",TRANS,"tr");
+function chk(){$("goQuiz").disabled=!(G.city&&G.act&&G.tr)}
+function drawMap(box,onPick,sel,lock){
+  box.innerHTML="";
+  LAND.forEach(l=>{const d=document.createElement("div");d.className="land";d.style.cssText=`left:${l[0]}%;top:${l[1]}%;width:${l[2]}%;height:${l[3]}%;transform:rotate(${l[4]}deg)`;box.appendChild(d)});
+  CITIES.forEach((c,i)=>{const b=document.createElement("button");b.type="button";b.className="pin"+(sel===c?" sel":"")+(lock&&sel!==c?" dim":"");
+    b.style.left=POS[i][0]+"%";b.style.top=POS[i][1]+"%";b.textContent=c[1];b.setAttribute("aria-label",c[0]);
+    const s=document.createElement("span");s.textContent=c[0];b.appendChild(s);
+    if(lock)b.disabled=true;else b.onclick=()=>{onPick(c);box.querySelectorAll(".pin").forEach(p=>p.classList.remove("sel"));b.classList.add("sel")};
+    box.appendChild(b)});
+}
+drawMap($("cities"),d=>{G.city=d;chk()},null);
+
+function newScenario(){
+  let seen=[];try{seen=JSON.parse(localStorage.getItem("seenTrips")||"[]")}catch(e){}
+  let sc,id,n=0;
+  do{sc={k:pick(KIDS),city:pick(CITIES),act:pick(ACTS),tr:pick(TRANS)};id=sc.city[0]+sc.act[0]+sc.tr[0];n++}while(seen.includes(id)&&n<60);
+  seen.push(id);try{localStorage.setItem("seenTrips",JSON.stringify(seen.slice(-40)))}catch(e){}
+  return sc;
+}
+function startStory(){
+  G.stage=1;G.ok1=G.ok2=0;G.l1=G.l2=3;G.base=0;G.xp=0;setXP();
+  const sc0=newScenario(),k=sc0.k;G.subj={sub:k[2],who:k[2].toLowerCase()};
+  G.city=sc0.city;G.act=sc0.act;G.tr=sc0.tr;
+  $("stTitle").textContent=k[1]+" "+k[0]+" went on a trip! Look and remember!";
+  drawMap($("stMap"),null,G.city,true);
+  const sc=$("stScene");sc.innerHTML="";
+  [[G.city[2],G.city[1]+" "+G.city[0]],[G.act[1],G.act[0]],[G.tr[1],G.tr[0]]].forEach(x=>{const d=document.createElement("div");d.className="sc";const b=document.createElement("b");b.textContent=x[0];const s=document.createElement("span");s.textContent=x[1];d.append(b,s);sc.appendChild(d)});
+  let n=8;const go=$("stGo");go.disabled=true;$("stCount").textContent="Memorize... "+n;clearInterval(sT);
+  sT=setInterval(()=>{n--;if(n>0)$("stCount").textContent="Memorize... "+n;else{clearInterval(sT);$("stCount").textContent="Ready when you are!";go.disabled=false}},1000);
+  const tx=$("stText");tx.innerHTML="";[`${k[2]} went to ${G.city[0]} last week.`,`${k[2]} ${G.act[0]} there.`,`${k[2]} went there by ${G.tr[0]}.`].forEach(s=>{const p=document.createElement("div");p.textContent=s;tx.appendChild(p)});
+  show("story");speak(`${k[0]} went to ${G.city[0]} last week. ${k[2]} ${G.act[0]} there. ${k[2]} went there by ${G.tr[0]}.`);
+}
+function startGame2(){
+  G.stage=2;G.base=G.xp;G.subj={sub:"I",who:"you"};G.city=G.act=G.tr=null;
+  drawMap($("cities"),d=>{G.city=d;chk()},null);
+  document.querySelectorAll(".chip").forEach(c=>c.classList.remove("sel"));
+  $("goQuiz").disabled=true;show("trip");
+}
+$("stGo").onclick=()=>{try{speechSynthesis.cancel()}catch(e){}startQuiz()};
+
+/* questions */
+function others(list,ans,n){return shuffle(list.filter(x=>x!==ans)).slice(0,n)}
+function buildQs(){
+  const c=G.city[0],a=G.act[0],t=G.tr[0];
+  const sb=G.subj.sub,w=G.subj.who,cl=x=>x[1]+" "+x[0],cityL=CITIES.map(cl),actL=ACTS.map(cl),trL=TRANS.map(cl),cL=cl(G.city),aL=cl(G.act),tL=cl(G.tr);
+  return [
+    {tag:"📍 WHERE",type:"choice",prompt:`Where did ${w} go last week?`,opts:shuffle([cL,...others(cityL,cL,3)]),ans:cL},
+    {tag:"👂 LISTEN",type:"choice",say:`${sb} went to ${c} last week.`,prompt:"Listen. Where did the traveler go?",opts:shuffle([cL,...others(cityL,cL,3)]),ans:cL},
+    {tag:"🧠 GRAMMAR",type:"choice",prompt:`${sb} ___ to ${c} last week.`,opts:shuffle(["went","go","goed","going"]),ans:"went"},
+    {tag:"🧩 WORD ORDER",type:"order",prompt:"Put the words in order!",ans:`${sb} went there by ${t}.`},
+    {tag:"🎯 ACTIVITY",type:"choice",prompt:`What did ${w} do there?`,opts:shuffle([aL,...others(actL,aL,2)]),ans:aL},
+    {tag:"🚆 TRANSPORT",type:"choice",prompt:`How did ${w} get there?`,opts:shuffle([tL,...others(trL,tL,2)]),ans:tL},
+    {tag:"✍️ SPELLING",type:"type",emoji:G.tr[1],prompt:"Type the transport word!",ans:t},
+    {tag:"👑 BOSS",type:"order",prompt:"Build the full sentence!",ans:`${sb} went to ${c} last week.`}
+  ];
+}
+$("goQuiz").onclick=startQuiz;
+function startQuiz(){G.xp=G.base||0;G.lives=3;G.streak=0;G.qi=0;G.ok=0;G.qs=buildQs();setXP();show("quiz");nextQ()}
+
+function speak(txt){
+  if(!("speechSynthesis" in window))return;
+  try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(txt);u.lang="en-US";u.rate=.8;u.pitch=1.1;speechSynthesis.speak(u)}catch(e){}
+}
+function hud(){
+  $("lives").textContent="❤️".repeat(G.lives)+"🖤".repeat(3-G.lives);
+  $("streak").textContent=G.streak>1?"🔥 x"+G.streak:"";
+  $("qn").textContent=(G.qi+1)+" / "+G.qs.length;
+}
+function startTimer(){
+  clearInterval(timer);tleft=QTIME;const bar=$("tbar");bar.classList.remove("low");bar.style.width="100%";
+  timer=setInterval(()=>{tleft-=.1;bar.style.width=Math.max(0,tleft/QTIME*100)+"%";
+    if(tleft<=5)bar.classList.add("low");
+    if(tleft<=0){clearInterval(timer);done(false,"⏰ Time’s up!")}},100);
+}
+function nextQ(){
+  if(G.qi>=G.qs.length){return finish()}
+  const q=G.qs[G.qi];locked=false;hud();$("fb").textContent="";$("qtag").textContent="GAME "+G.stage+" · "+q.tag;
+  const b=$("qbody");b.innerHTML="";
+  const p=document.createElement("div");p.className="q";p.textContent=q.prompt;
+  if(q.type==="type"){const e=document.createElement("div");e.className="big";e.textContent=q.emoji;b.appendChild(e)}
+  b.appendChild(p);
+  if(q.say){const s=document.createElement("button");s.className="btn ghost";s.type="button";s.style.display="block";s.style.margin="0 auto 8px";s.textContent="🔊 Play sound";s.onclick=()=>speak(q.say);b.appendChild(s);setTimeout(()=>speak(q.say),300)}
+  if(q.type==="choice")buildChoice(q,b);else if(q.type==="order")buildOrder(q,b);else buildType(q,b);
+  startTimer();
+}
+function buildChoice(q,b){
+  const o=document.createElement("div");o.className="opts"+(q.opts.length>3?" two":"");
+  q.opts.forEach(t=>{const x=document.createElement("button");x.type="button";x.className="opt";x.textContent=t;
+    x.onclick=()=>{if(locked)return;const r=t===q.ans;x.classList.add(r?"ok":"no");
+      if(!r)[...o.children].forEach(y=>{if(y.textContent===q.ans)y.classList.add("ok")});done(r)};
+    o.appendChild(x)});
+  b.appendChild(o);
+}
+function buildOrder(q,b){
+  const words=q.ans.split(" "),line=document.createElement("div"),bank=document.createElement("div");
+  line.className="line";bank.className="bank";
+  const toks=shuffle(words.map((w,i)=>({w,i})));
+  const btns=toks.map(tk=>{const x=document.createElement("button");x.type="button";x.className="tok";x.textContent=tk.w;
+    x.onclick=()=>{if(locked)return;(x.parentNode===bank?line:bank).appendChild(x)};bank.appendChild(x);return x});
+  const ck=document.createElement("button");ck.type="button";ck.className="btn blue";ck.style.display="block";ck.style.margin="0 auto";ck.textContent="CHECK ✔";
+  ck.onclick=()=>{if(locked)return;const got=[...line.children].map(x=>x.textContent).join(" ");
+    if(got===q.ans)done(true);else if(line.children.length<words.length){$("fb").textContent="Use all the words 🙂"}else{done(false)}};
+  b.append(line,bank,ck);
+}
+function buildType(q,b){
+  const i=document.createElement("input");i.type="text";i.autocomplete="off";i.autocapitalize="none";i.spellcheck=false;i.placeholder="Type here...";i.style.textAlign="center";
+  const ck=document.createElement("button");ck.type="button";ck.className="btn blue";ck.style.display="block";ck.style.margin="14px auto 0";ck.textContent="CHECK ✔";
+  const go=()=>{if(locked||!i.value.trim())return;const r=i.value.trim().toLowerCase()===q.ans.toLowerCase();i.style.borderColor=r?"#4ade80":"#f87171";done(r,r?null:"Answer: "+q.ans)};
+  ck.onclick=go;i.onkeydown=e=>{if(e.key==="Enter")go()};
+  b.append(i,ck);setTimeout(()=>i.focus(),100);
+}
+function done(ok,note){
+  if(locked)return;locked=true;clearInterval(timer);
+  const fb=$("fb");
+  if(ok){G.ok++;G.streak++;const bonus=Math.round(tleft),combo=(G.streak-1)*5,gain=20+bonus+combo;G.xp+=gain;
+    fb.textContent=`✅ +${gain} XP`+(G.streak>1?` (🔥 combo +${combo})`:"")}
+  else{G.lives--;G.streak=0;G.xp=Math.max(0,G.xp-5);fb.textContent=(note||"❌ Not quite!")+" −1 ❤️"}
+  setXP();hud();
+  setTimeout(()=>{if(G.lives<=0)return finish();G.qi++;nextQ()},1300);
+}
+
+/* results */
+function finish(){
+  clearInterval(timer);
+  const win=G.lives>0&&G.qi>=G.qs.length-1;
+  if(win){G["ok"+G.stage]=G.ok;G["l"+G.stage]=G.lives}
+  if(!win){$("rEmoji").textContent="😢";$("rTitle").textContent="Oh no! Out of lives, "+G.name;}
+  else{$("rEmoji").textContent="🎉";$("rTitle").textContent=G.stage===1?"Game 1 complete, "+G.name+"! Game 2 is next 🎮":"Amazing, "+G.name+"!";confetti()}
+  $("rCity").textContent=G.city[1]+" "+G.city[0];$("rAct").textContent=G.act[0];$("rTr").textContent=G.tr[0];
+  $("goPass").style.display=win?"":"none";$("goPass").textContent=G.stage===1?"🎮 GO TO GAME 2":"🛂 GET MY PASSPORT";
+  document.querySelectorAll(".sbj").forEach(e=>e.textContent=G.subj.sub);
+  show("result");
+}
+$("speakBtn").onclick=()=>{const s=G.subj.sub;speak(`${s} went to ${G.city[0]} last week. ${s} ${G.act[0]} there. ${s} went there by ${G.tr[0]}.`)};
+$("retry").onclick=()=>{if(G.stage===1)startStory();else startQuiz()};
+$("goPass").onclick=()=>{
+  if(G.stage===1){startGame2();return}
+  const f=(el,v)=>{$(el).textContent=v};
+  f("ppName",G.name);f("ppNat",G.nat);f("ppCity",G.city[1]+" "+G.city[0]);f("ppAct",G.act[0]);f("ppTr",G.tr[0]);f("fscore",G.xp);
+  const lg=$("ppLogo");lg.innerHTML="";if(G.logoImg){const i=document.createElement("img");i.src=G.logoImg;i.alt="Logo";lg.appendChild(i)}else lg.textContent=G.logo;
+  const ph=$("ppPhoto");ph.innerHTML="";if(G.photo){const i=document.createElement("img");i.src=G.photo;i.alt="Photo";ph.appendChild(i)}else ph.textContent="👤";
+  const st=$("stamps");st.innerHTML="";const E=["📍","👂","🧠","🎯","🚆","🧩","✍️","👑"];E.concat(E).forEach((s,i)=>{const d=document.createElement("div");const got=i<8?i<G.ok1:i-8<G.ok2;d.className="stamp"+(got?"":" off");d.textContent=s;st.appendChild(d)});
+  const stars=G.ok1+G.ok2>=16&&Math.min(G.l1,G.l2)===3?5:G.ok1+G.ok2>=15?4:3;$("stars").textContent="⭐".repeat(stars);
+  $("rank").textContent=stars===5?"🏆 WORLD CHAMPION":stars===4?"🥇 GREAT TRAVELER":"🥈 EXPLORER";
+  let best=0;try{best=+localStorage.getItem("tripBest")||0;if(G.xp>best){localStorage.setItem("tripBest",G.xp);best=G.xp}}catch(e){}
+  $("best").textContent=best?"Best score on this device: "+best+" XP":"";
+  show("passport");confetti();
+};
+$("again").onclick=()=>{const keep={name:G.name,nat:G.nat,logo:G.logo,logoImg:G.logoImg,photo:G.photo};fresh();Object.assign(G,keep);setXP();
+  document.querySelectorAll(".chip").forEach(c=>c.classList.remove("sel"));startStory()};
+
+function confetti(){
+  const em=["⭐","✨","🎉","🌎","✈️","🧳"];
+  for(let i=0;i<30;i++){const d=document.createElement("div");d.className="cf";d.textContent=em[Math.floor(Math.random()*em.length)];
+    d.style.left=Math.random()*100+"vw";d.style.fontSize=(16+Math.random()*14)+"px";d.style.animationDuration=(2+Math.random()*2)+"s";
+    document.body.appendChild(d);setTimeout(()=>d.remove(),4200)}
+}
+</script>
+</body>
+</html>
